@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Document</title>
+</head>
+<body>
+ 
+    <p>Rock Paper Scissors</p>
+
+    <button class='js-rock'   >Rock</button>
+
+    <button class="js-paper"    >Paper</button>
+    <button class='js-scissor' >Scissor</button>
+    <p class="m"> </p>
+    <p class="p"></p>
+    <button   onclick="points() ;">SCORE</button>
+    <p class="r"> </p>
+    <button   onclick="localStorage.removeItem('score');score={wins:0,looses:0,Tie:0};alert(`Wins:${score.wins} , Losses:${score.looses} , TIE:${score.Tie} `);
+       document.querySelector('.r').innerHTML=`Wins:${score.wins} , Losses:${score.looses} , TIE:${score.Tie}`;
+    
+    ">RESET SCORE</button>
+    <button class="js-ap" onclick="ap();">Auto Play</button>
+     
+     
+    
+ 
+    <script>//Auto play insert button code
+
+        
+        let score= JSON.parse(localStorage.getItem("score"))|| {wins:0,Tie:0,looses:0};
+
+        
+         
+       document.querySelector('.r').innerHTML=`Wins:${score.wins} , Losses:${score.looses} , TIE:${score.Tie}`;
+
+
+        let isplaying=false;
+        let interId;
+        function ap(){
+            isplaying=!isplaying;
+            if(isplaying){
+                interId= setInterval(function(){ // you can also use arrow function
+                const playermove=game();
+                 
+                play(playermove);
+            } , 5000);
+            document.querySelector('.js-ap').innerHTML="Stop It";
+
+            }
+            else{
+                clearInterval(interId);
+                document.querySelector('.js-ap').innerHTML="Auto Play";
+
+            }
+        }
+        const buttonElement=document.querySelector('.js-rock');
+        buttonElement.addEventListener('click',()=>{
+            play('rock'); // like this we should write fucntion to run if you write directly it returns undefined 
+        });
+        const buttonElement1=document.querySelector('.js-paper');
+        buttonElement1.addEventListener('click',()=>{
+            play('paper'); // like this we should write fucntion to run if you write directly it returns undefined 
+        });
+        const buttonElement2=document.querySelector('.js-scissor');
+        buttonElement2.addEventListener('click',()=>{
+            play('scissor'); // like this we should write fucntion to run if you write directly it returns undefined 
+        }); 
+         
+        document.body.addEventListener('keydown',(event)=>{
+            if(event.key==='r'){
+                play('rock');
+
+            }
+            else if(event.key==='p'){
+                  play('paper');
+
+            }
+            else if(event.key==='s'){
+                  play('scissor');
+
+            }
+
+
+        });
+
+
+
+
+
+
+        function play(user){
+            random=game(); 
+
+            let result=''; 
+            if(user==="scissor"){
+                   if(random==='scissor'){
+                result='Tie';
+                score.Tie+=1;
+                }
+                else if(random==='rock'){
+                    result='You lose';
+                    score.looses+=1;
+                }
+                else{
+                    result='You win';
+                    score.wins+=1;
+                }
+                document.querySelector('.m').innerHTML=`${result}`;
+                document.querySelector('.p').innerHTML=`YourMove ${user}, ComputerMove ${random}`;
+                alert(`${result} — You picked ${user}, Computer picked ${random}`);
+            
+            }
+            else if(user==="paper"){
+                random=game();
+                 
+                let result='';
+                
+                if(random==='paper'){
+                    result='Tie';
+                    score.Tie+=1;
+                }
+                else if(random==='scissor'){
+                    result='You lose';
+                    score.looses+=1;
+                }
+                else{
+                    result='You win';
+                    score.wins+=1;
+                     
+                }
+                document.querySelector('.m').innerHTML=`${result}`;
+                document.querySelector('.p').innerHTML=`YourMove ${user}, ComputerMove ${random}`;
+                alert(`${result} — You picked ${user}, Computer picked ${random}`);
+         
+
+
+            }
+            else{
+                random=game();
+        
+                     
+                let result='';
+                if(random==='rock'){
+                    result='tie';
+                    console.log('Tie');
+                    score.Tie+=1;
+
+                }
+                else if(random==='paper'){
+                    result='you loose';
+                    console.log('you loose');
+                    score.looses+=1;
+
+                }
+                else{
+                    result='you won '
+                    
+                    console.log('you won');
+                    score.wins+=1;
+                }
+                document.querySelector('.m').innerHTML=`${result}`;  
+                document.querySelector('.p').innerHTML=`YourMove:${user}, ComputerMove:${random}`; 
+                alert(`${result} ,you picked ${user},computer picked ${random}`); 
+              
+
+
+
+            }
+            
+            localStorage.setItem("score",JSON.stringify(score));
+            document.querySelector('.r').innerHTML=`Wins:${score.wins} , Losses:${score.looses} , TIE:${score.Tie}`;
+        }
+        function points(){
+            alert(`Wins:${score.wins} , Losses:${score.looses} , TIE:${score.Tie}`);
+             
+        }
+       
+        
+        function game(){
+            let random=Math.random();
+            if(random>=0 && random<1/3){
+                return 'rock'; 
+            }
+            else if(random>=1/3 && random<2/3){
+              return 'paper';
+            }
+            else{
+             
+                return 'scissor';
+            }
+             
+        }
+        
+        
+
+
+    </script>
+    
+</body>
+</html> 
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Document</title>
+</head>
+<body>
+ 
+    <p>Rock Paper Scissors</p>
+
+    <button onclick="play('rock'); ">Rock</button>
+
+    <button  onclick="play('paper');"  >Paper</button>
+    <button onclick="play('scissor');">Scissor</button>
+    <p class="m"> </p>
+    <p class="p"></p>
+    <button   onclick="points() ;">SCORE</button>
+    <p class="r"> </p>
+    <button   onclick="localStorage.removeItem('score');score={wins:0,looses:0,Tie:0};alert(`Wins:${score.wins} , Losses:${score.looses} , TIE:${score.Tie} `);
+       document.querySelector('.r').innerHTML=`Wins:${score.wins} , Losses:${score.looses} , TIE:${score.Tie}`;
+    
+    ">RESET SCORE</button>
+    <button onclick="ap();">Auto Play</button>
+     
+     
+    
+ 
+    <script>
+
+        
+        let score= JSON.parse(localStorage.getItem("score"))|| {wins:0,Tie:0,looses:0};
+
+        
+         
+       document.querySelector('.r').innerHTML=`Wins:${score.wins} , Losses:${score.looses} , TIE:${score.Tie}`;
+
+      
+
+    
+       
+
+
+        function play(user){
+            random=game(); 
+
+            let result=''; 
+            if(user==="scissor"){
+                   if(random==='scissor'){
+                result='Tie';
+                score.Tie+=1;
+                }
+                else if(random==='rock'){
+                    result='You lose';
+                    score.looses+=1;
+                }
+                else{
+                    result='You win';
+                    score.wins+=1;
+                }
+                document.querySelector('.m').innerHTML=`${result}`;
+                document.querySelector('.p').innerHTML=`YourMove ${user}, ComputerMove ${random}`;
+                alert(`${result} — You picked ${user}, Computer picked ${random}`);
+            
+            }
+            else if(user==="paper"){
+                random=game();
+                 
+                let result='';
+                
+                if(random==='paper'){
+                    result='Tie';
+                    score.Tie+=1;
+                }
+                else if(random==='scissor'){
+                    result='You lose';
+                    score.looses+=1;
+                }
+                else{
+                    result='You win';
+                    score.wins+=1;
+                     
+                }
+                document.querySelector('.m').innerHTML=`${result}`;
+                document.querySelector('.p').innerHTML=`YourMove ${user}, ComputerMove ${random}`;
+                alert(`${result} — You picked ${user}, Computer picked ${random}`);
+         
+
+
+            }
+            else{
+                random=game();
+        
+                     
+                let result='';
+                if(random==='rock'){
+                    result='tie';
+                    console.log('Tie');
+                    score.Tie+=1;
+
+                }
+                else if(random==='paper'){
+                    result='you loose';
+                    console.log('you loose');
+                    score.looses+=1;
+
+                }
+                else{
+                    result='you won '
+                    
+                    console.log('you won');
+                    score.wins+=1;
+                }
+                document.querySelector('.m').innerHTML=`${result}`;  
+                document.querySelector('.p').innerHTML=`YourMove:${user}, ComputerMove:${random}`; 
+                alert(`${result} ,you picked ${user},computer picked ${random}`); 
+              
+
+
+
+            }
+            
+            localStorage.setItem("score",JSON.stringify(score));
+            document.querySelector('.r').innerHTML=`Wins:${score.wins} , Losses:${score.looses} , TIE:${score.Tie}`;
+        }
+        function points(){
+            alert(`Wins:${score.wins} , Losses:${score.looses} , TIE:${score.Tie}`);
+             
+        }
+       
+        
+        function game(){
+            let random=Math.random();
+            if(random>=0 && random<1/3){
+                return 'rock'; 
+            }
+            else if(random>=1/3 && random<2/3){
+              return 'paper';
+            }
+            else{
+             
+                return 'scissor';
+            }
+             
+        }
+        
+        
+
+
+    </script>
+    
+</body>
+</html>  -->
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Document</title>
+</head>
+<body>
+ 
+    <p>Rock Paper Scissors</p>
+
+    <button onclick="play('rock'); ">Rock</button>
+
+    <button  onclick="play('paper');"  >Paper</button>
+    <button onclick="play('scissor');">Scissor</button>
+    <button onclick="points()">SCORE</button>
+    <button onclick="reset();">RESET SCORE</button>
+ 
+    <script>
+        let score=0;
+        
+        function play(user){
+            random=game();
+            //   <button onclick="score=0;alert(`you score is now  0`);">RESET SCORE</button> or us can use like this also 
+            // here now u r using +"let-declaring" every where beacuse nowthis are local varibles nahh you know 
+            let result=''; 
+            if(user==="scissor"){
+                   if(random==='scissor'){
+                result='Tie';
+                }
+                else if(random==='rock'){
+                    result='You lose';
+                }
+                else{
+                    result='You win';
+                    score+=1;
+                }
+                alert(`${result} — You picked ${user}, Computer picked ${random}`);
+            }
+            else if(user==="paper"){
+                random=game();
+                 
+                let result='';
+                
+                if(random==='paper'){
+                    result='Tie';
+                }
+                else if(random==='scissor'){
+                    result='You lose';
+                }
+                else{
+                    result='You win';
+                    score+=1;
+                }
+                alert(`${result} — You picked ${user}, Computer picked ${random}`);
+         
+
+
+            }
+            else{
+                random=game();
+        
+                     
+                let result='';
+                if(random==='rock'){
+                    result='tie';
+                    console.log('Tie');
+
+                }
+                else if(random==='paper'){
+                    result='you loose';
+                    console.log('you loose');
+
+                }
+                else{
+                    result='you won '
+                    
+                    console.log('you won');
+                    score+=1
+                }   
+                alert(`${result} ,you picked ${user},computer picked ${random}`); 
+
+
+
+            }
+        }
+        function points(){
+            alert(`you score is ${score}`);
+        }
+        function reset(){
+            score=0;
+            alert(`score has been reset to ${score}`);
+
+        }
+        
+        function game(){
+            let random=Math.random();
+            if(random>=0 && random<1/3){
+                return 'rock'; 
+            }
+            else if(random>=1/3 && random<2/3){
+              return 'paper';
+            }
+            else{
+             
+                return 'scissor';
+            }
+             
+        }
+        
+        
+
+
+    </script>
+    
+</body>
+</html> 
+ -->
